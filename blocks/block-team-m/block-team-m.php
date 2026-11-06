@@ -49,14 +49,29 @@ if( $TEAM_MEMBERS ): ?>
                                         $TEAM_M_PHOTO = get_field('team_m-img', $TEAM_MEMBER->ID);
                                 ?>
                                 <div class="team-grid--item_img_container team-grid--item---toggle">
-                                    <img src="<?php echo esc_url($TEAM_M_PHOTO['url']); ?>" alt="<?php echo esc_attr($TEAM_M_PHOTO['alt']); ?>" />
+                                    <?php
+                                    if ( is_array( $TEAM_M_PHOTO ) && ! empty( $TEAM_M_PHOTO['ID'] ) ) :
+                                        echo wp_get_attachment_image( $TEAM_M_PHOTO['ID'], 'large', false, array(
+                                            'sizes'   => '(min-width: 52rem) 40vw, 90vw',
+                                            'loading' => 'lazy',
+                                        ) );
+                                    elseif ( is_array( $TEAM_M_PHOTO ) && ! empty( $TEAM_M_PHOTO['url'] ) ) :
+                                    ?>
+                                    <img src="<?php echo esc_url( $TEAM_M_PHOTO['url'] ); ?>" alt="<?php echo esc_attr( $TEAM_M_PHOTO['alt'] ); ?>" />
+                                    <?php endif; ?>
                                 </div>
                                 <?php
                                     elseif($TEAM_M_MEDIA === 'video' && get_field('team_m-video_mp4', $TEAM_MEMBER->ID) ) :
                                         $TEAM_M_VIDEO_POSTER = get_field('team_m-video_poster', $TEAM_MEMBER->ID);
                                 ?>
                                 <div class="inline-video-container team-grid--item---toggle">
-                                    <video playsinline muted loop poster="<?php echo esc_url($TEAM_M_VIDEO_POSTER['url']); ?>" class="lazyload play-on-hover inline-video">
+                                    <?php
+                                    $poster_url = '';
+                                    if ( is_array( $TEAM_M_VIDEO_POSTER ) ) {
+                                        $poster_url = ! empty( $TEAM_M_VIDEO_POSTER['sizes']['large'] ) ? $TEAM_M_VIDEO_POSTER['sizes']['large'] : $TEAM_M_VIDEO_POSTER['url'];
+                                    }
+                                    ?>
+                                    <video playsinline muted loop preload="none" poster="<?php echo esc_url( $poster_url ); ?>" class="play-on-hover inline-video">
                                         <source src="<?php echo esc_attr(get_field('team_m-video_mp4', $TEAM_MEMBER->ID)); ?>" type="video/mp4">
                                         <!-- <source src="<?php #echo esc_attr(get_field('team_m-video_webm', $TEAM_MEMBER->ID)); ?>" type="video/webm"> -->
                                     </video>

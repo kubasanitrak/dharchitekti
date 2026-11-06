@@ -32,6 +32,11 @@
 		$class_name .= ' ' . 'row--item---width_' . $customWidth;
 	endif;
 
+	$display_width = 100;
+	if ( empty( $isFullWidth ) ) :
+		$display_width = ! empty( $customWidth ) ? (int) $customWidth : 50;
+	endif;
+
 	$linkToPOST = get_field( 'grid_item_link_to' );
 
 	$IS_LINK = false;
@@ -46,8 +51,13 @@
 
 <div style="<?php echo esc_attr( $style ); ?>" class="<?php echo esc_attr( $class_name ); ?>">
 	<div class="image-container" style="<?php echo esc_attr( $style ); ?>">
-		<a href="<?php echo wp_get_attachment_image_url( $imgID, 'full' ); ?>" data-rel="lightbox-image-0" data-rl_title="" data-rl_caption="" title="" class="lightbox swipebox">
-		<?php echo wp_get_attachment_image($imgID, 'full'); ?>
+		<a href="<?php echo esc_url( wp_get_attachment_image_url( $imgID, 'full' ) ); ?>" data-rel="lightbox-image-0" data-rl_title="" data-rl_caption="" title="" class="lightbox swipebox">
+		<?php
+			echo wp_get_attachment_image( $imgID, 'large', false, array(
+				'sizes' => dha_sizes_for_width( $display_width ),
+				'alt'   => isset( $imgOBJ['alt'] ) ? $imgOBJ['alt'] : '',
+			) );
+		?>
 		</a>
 	</div>
 	<?php if($IS_LINK) : ?>

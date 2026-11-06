@@ -26,8 +26,10 @@ PHOTOCONTENT
         $thumbID = get_post_thumbnail_id();
 ?>
 <div class="section section-projdet-hero full-bleed" data-theme="default">
-    <a href="<?php echo wp_get_attachment_image_url( $thumbID, 'full' ); ?>" id="hero-img-gallery-linkID" data-rel="" data-rl_title="" data-rl_caption="" title="" class="lightbox swipebox">
-        <?php the_post_thumbnail( 'full' ); ?>
+    <a href="<?php echo esc_url( wp_get_attachment_image_url( $thumbID, 'full' ) ); ?>" id="hero-img-gallery-linkID" data-rel="" data-rl_title="" data-rl_caption="" title="" class="lightbox swipebox">
+        <?php the_post_thumbnail( '2048x2048', array(
+            'sizes' => '(max-width: 2048px) 100vw, 2048px',
+        ) ); ?>
     </a>
 </div>
 <?php

@@ -214,12 +214,8 @@ add_filter( 'login_headerurl', 'my_login_logo_url' );
 // Adds support for editor color palette.
 
 function my_theme_add_new_features() {
-
-    // The new colors we are going to add
-
-    // Apply the color palette containing the original colors and 2 new colors:
-    add_theme_support( 'editor-color-palette', $newColorPalette);
-    // Disables color picker in block color palette.
+    // Custom colors stay off. The previous palette variable was never defined,
+    // which threw a warning on PHP 8.2 and registered nothing.
     add_theme_support( 'disable-custom-colors' );
 }
 add_action( 'after_setup_theme', 'my_theme_add_new_features' );
@@ -255,26 +251,151 @@ remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 remove_action( 'admin_print_styles', 'print_emoji_styles' );
 
 
-function office_page_url() {
-
-	$menu = get_term( $locations['team-members'], 'nav_menu' );
-    $menu_items = wp_get_nav_menu_items($menu->term_id);
-    // $menu_items = wp_get_nav_menu_items('team-members');
-    foreach( $menu_items as $menu_item ) {
-        $link = $menu_item->url;
-    }
-    // echo $link;
-    // return $link;
-    print_r($menu_item);
-    // USE IT
-    // echo office_page_url();
-}
-
-// Load Gutenberg Editor Styles
+// Editor stylesheet only. Previously this ran on every wp-admin screen.
 function custom_gutenberg_editor_styles() {
     wp_enqueue_style(
-        'admin-styles',
-        get_stylesheet_directory_uri().'/style-editor.css?v23-04-2024.01'
+        'dha-editor-styles',
+        get_stylesheet_directory_uri() . '/style-editor.css',
+        array(),
+        dha_file_version( '/style-editor.css' )
     );
 }
-add_action( 'admin_enqueue_scripts', 'custom_gutenberg_editor_styles' );
+add_action( 'enqueue_block_editor_assets', 'custom_gutenberg_editor_styles' );
+
+// Core pattern directory is a remote request during editor boot and this theme does not use those patterns.
+add_action( 'after_setup_theme', function() {
+    remove_theme_support( 'core-block-patterns' );
+}, 20 );
+add_filter( 'should_load_remote_block_patterns', '__return_false' );
+
+/**
+ * Cache-bust a theme file from its modification time.
+ */
+function dha_file_version( $relative ) {
+	$path = get_template_directory() . $relative;
+	return file_exists( $path ) ? (string) filemtime( $path ) : null;
+}
+
+/**
+ * sizes attribute for a column that occupies $percent of the viewport.
+ */
+function dha_sizes_for_width( $percent ) {
+	$percent = (int) $percent;
+	if ( $percent <= 0 || $percent >= 100 ) {
+		return '(max-width: 1600px) 100vw, 1600px';
+	}
+	return '(max-width: 1600px) ' . $percent . 'vw, ' . $percent . 'vw';
+}
+
+/**
+ * Keep full-bleed content images from advertising a 2000px+ slot.
+ */
+function dha_cap_image_sizes( $sizes, $size ) {
+	if ( is_admin() ) {
+		return $sizes;
+	}
+	$width = is_array( $size ) ? (int) $size[0] : 0;
+	if ( $width > 1600 ) {
+		return '(max-width: 1600px) 100vw, 1600px';
+	}
+	return $sizes;
+}
+add_filter( 'wp_calculate_image_sizes', 'dha_cap_image_sizes', 10, 2 );
+
+function dha_needs_lightbox() {
+	if ( is_admin() ) {
+		return false;
+	}
+	if ( is_front_page() || is_singular( 'post' ) ) {
+		return true;
+	}
+	$post = get_post();
+	if ( ! $post ) {
+		return false;
+	}
+	return has_block( 'acf/hp-grid-item', $post ) || has_block( 'acf/grid-row', $post );
+}
+
+function dha_needs_motion() {
+	if ( is_admin() ) {
+		return false;
+	}
+	$post = get_post();
+	return $post && has_block( 'acf/team-m', $post );
+}
+
+function dha_enqueue_front_assets() {
+	if ( is_admin() ) {
+		return;
+	}
+
+	$uri = get_template_directory_uri();
+
+	wp_enqueue_style( 'dha-style', $uri . '/assets/css/style.css', array(), dha_file_version( '/assets/css/style.css' ) );
+	wp_enqueue_style( 'dha-block-fixes', $uri . '/assets/css/wp-block-fix-style.css', array( 'dha-style' ), dha_file_version( '/assets/css/wp-block-fix-style.css' ) );
+
+	if ( dha_needs_lightbox() ) {
+		wp_enqueue_style( 'dha-lightbox', $uri . '/assets/css/dha-simple-lightbox-override.css', array( 'dha-style' ), dha_file_version( '/assets/css/dha-simple-lightbox-override.css' ) );
+	}
+
+	wp_enqueue_script( 'dha-theme', $uri . '/assets/js/theme.js', array(), dha_file_version( '/assets/js/theme.js' ), true );
+	wp_localize_script( 'dha-theme', 'dhaTheme', array(
+		'gridLabel' => __( 'grid', 'dharchitekti' ),
+	) );
+
+	if ( is_page_template( 'page-index.php' ) ) {
+		wp_enqueue_script( 'dha-index-thumbs', $uri . '/assets/js/index-thumbs.js', array(), dha_file_version( '/assets/js/index-thumbs.js' ), true );
+	}
+
+	if ( dha_needs_motion() ) {
+		wp_enqueue_script( 'gsap', $uri . '/assets/js/libs/gsap.min.js', array(), dha_file_version( '/assets/js/libs/gsap.min.js' ), true );
+		wp_enqueue_script( 'gsap-scrollto', $uri . '/assets/js/libs/ScrollToPlugin.min.js', array( 'gsap' ), dha_file_version( '/assets/js/libs/ScrollToPlugin.min.js' ), true );
+		wp_enqueue_script( 'gsap-flip', $uri . '/assets/js/libs/Flip.min.js', array( 'gsap' ), dha_file_version( '/assets/js/libs/Flip.min.js' ), true );
+		wp_enqueue_script( 'dha-motion', $uri . '/assets/js/theme-motion.js', array( 'gsap', 'gsap-scrollto', 'gsap-flip' ), dha_file_version( '/assets/js/theme-motion.js' ), true );
+		wp_enqueue_script( 'dha-team-video', $uri . '/assets/js/team-video.js', array(), dha_file_version( '/assets/js/team-video.js' ), true );
+	}
+}
+add_action( 'wp_enqueue_scripts', 'dha_enqueue_front_assets' );
+
+/**
+ * Lightbox (and its jQuery, Infinite Scroll, and DOMPurify stack) only where a gallery is rendered.
+ */
+function dha_trim_plugin_assets() {
+	if ( is_admin() || dha_needs_lightbox() ) {
+		return;
+	}
+
+	$scripts = array(
+		'responsive-lightbox',
+		'responsive-lightbox-swipebox',
+		'responsive-lightbox-infinite-scroll',
+		'responsive-lightbox-sanitizer',
+		'dompurify',
+		'underscore',
+		'jquery',
+		'jquery-core',
+		'jquery-migrate',
+	);
+	foreach ( $scripts as $handle ) {
+		wp_dequeue_script( $handle );
+	}
+	wp_dequeue_style( 'responsive-lightbox-swipebox' );
+}
+add_action( 'wp_enqueue_scripts', 'dha_trim_plugin_assets', 100 );
+
+function dha_defer_theme_scripts( $tag, $handle ) {
+	$defer = array(
+		'dha-theme',
+		'dha-motion',
+		'dha-index-thumbs',
+		'dha-team-video',
+		'gsap',
+		'gsap-scrollto',
+		'gsap-flip',
+	);
+	if ( in_array( $handle, $defer, true ) && strpos( $tag, ' defer' ) === false ) {
+		$tag = str_replace( ' src=', ' defer src=', $tag );
+	}
+	return $tag;
+}
+add_filter( 'script_loader_tag', 'dha_defer_theme_scripts', 10, 2 );
