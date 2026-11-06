@@ -1,0 +1,16 @@
+.map-container {
+	position: relative;
+	width: 100vw;
+	max-width: 100vw;
+	margin-inline-start: 50%;
+	transform: translate(-50%, 0);
+	overflow: hidden;
+	.map-cont {
+		width: 100%;
+		height: 100%;
+		min-height: 75vh;
+		@include mq(mq-land) {
+			min-height: 80vh;
+		}
+	}
+}

@@ -1,0 +1,271 @@
+.section-items--list {
+	.items-item {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: baseline;
+		gap: 0 var(--gap);
+		position: relative;
+		
+
+		@include mq(mq-land) {
+			flex-wrap: nowrap;
+			gap: var(--gap);
+		}
+
+		&:first-child {
+			@include mq(mq-land) {
+				margin-top: calc(var(--pad-T) * 0.65);
+			}
+		}
+			
+		&--column {
+			&:not(.items-item--column_L) {
+				@include mq(mq-land) {
+					flex-basis: 12ch;
+				}
+			}
+			&_L {
+				flex-basis: 100%;
+				--base: 1;
+				@include mq(mq-land) {
+					--base: 2;
+					// flex-basis: calc((100% - (var(--gap) * 3)) / 3);
+					flex-basis: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) * var(--base));
+				}
+				@include mq(mq-BREAK-P) {
+					--base: 4;
+				}
+				text-indent: -.1em;
+			}
+			&_R {}
+			&_cat {
+				order: 2;
+				@include mq(mq-land) {
+					order: 1;
+				}
+			}
+			&_tag {
+				order: 3;
+				@include mq(mq-land) {
+					order: 2;
+				}
+			}
+			&_year {
+				order: 1;
+				@include mq(mq-land) {
+					order: 3;
+				}
+			}
+		}
+	}
+}
+.section-items--grid {
+	display: flex;
+	flex-wrap: wrap;
+	gap: calc(var(--gap) * 2.5) var(--gap);
+	.items-item {
+		flex-basis: 100%;
+		@include mq(mq-land) {
+			flex-basis: calc((100% - (var(--gap) * 2.05)) / 3);
+		}
+	}
+}
+.items-item {
+	overflow: hidden;
+	position: relative;
+	&--img_container {
+		display: flex;
+		aspect-ratio: var(--works-grid-ratio);
+		overflow: hidden;
+		margin-bottom: calc(var(--gutter) * 0.35);
+		img {
+			width: 100%;
+			// max-width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+	&--img {
+		&,
+		img {
+			width: 100%;
+			// max-width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+	}
+	&--year {}
+	&--title {}
+	&--link {}
+	&--column {
+		&_L {}
+		&_R {}
+	}
+}
+
+
+.thumb-preview {
+	position: fixed;
+	width: calc((100% - (var(--gap) * 3)) / 4.5);
+	z-index: 10;
+	top: 0;
+	right: var(--pad-R);
+	img {
+		width: 100%;
+		max-width: 100%;
+		height: auto;
+	}
+}
+.section-all-works {
+	--filter-W: 1px;
+	display: grid;
+	grid: 1fr / var(--filter-W) calc(100% - var(--filter-W));
+	transition: $global-transistion-duration $cubic;
+	&.filter-open {
+		// --filter-W: calc(50% - var(--gap));
+		--filter-W: calc( ( 100% - var(--gap) ) / 2);
+		@include mq(mq-land) {
+			// --filter-W: calc( (100% - (7 * var(--gutter)) ) / 8 + (var(--gap) * 1.25));
+			// --filter-W: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) + (var(--gap) * 0.99));
+			--filter-W: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) + (var(--gap) * var(--filter-W-fix)));
+		}
+		@include mq(mq-iPad-land) {
+			// --filter-W-fix: 0.75;
+		}
+		@include mq(mq-XL-UP) {
+			--filter-W-fix: 1.5;
+			--filter-W: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) + (var(--gap) * var(--filter-W-fix)));
+			// --filter-W: calc( (100% - (7 * var(--gutter)) ) / 8 + (var(--gap) * 1.75));
+			// --filter-W: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) + (var(--gap) * 1.25));
+		}
+		.all-works--content {
+			.section-items--grid {
+				padding: 0 var(--gap) 0 var(--pad-R);
+
+				@include mq(mq-land) {
+					width: calc(100vw + ( var(--gap) * var(--filter-W-fix) ) );
+				}
+				@include mq(mq-iPad-land) {
+					width: 100vw;
+				}
+				// @include mq(mq-XL-UP) {
+				// }
+			}
+		}
+		.all-works--filters {
+			opacity: 1;
+			transition-delay: $global-transistion-duration;
+		}
+	}
+	.all-works--filters {
+		grid-column: 1;
+		display: flex;
+		flex-direction: column;
+		// overflow: hidden;
+		padding-left: var(--pad-R);
+		opacity: 0;
+		transition:
+			opacity #{$dur}s -0.2s ease-out;
+		.filter-list--item {
+			padding-bottom: calc(var(--pad-T) * 0.1);
+			position: relative;
+			@include mq(mq-land) {
+				padding-bottom: calc(var(--pad-T) * 0.25);
+			}
+			&:first-child {
+				@include mq(mq-land) {
+					margin-top: calc(var(--pad-T) * 0.85);
+				}
+			}
+			> * {
+				display: inline-block;
+				position: relative;
+			}
+			// &::after {
+			h3::after {
+				content: "";
+				position: absolute;
+				right: calc(var(--gap) * -2.5);
+				top: 50%;
+				// transform: translate(0, -50%);
+				width: $dot-SIZE;
+				height: $dot-SIZE;
+				border-radius: 50%;
+			}
+			&.active {
+				// &::after {
+				h3::after {
+					background-color: var(--color-primary);
+				}
+			}
+		}
+	}
+	.all-works--content {
+		overflow: hidden;
+		display: grid;
+		grid: 1 / 1;
+		
+		.section-items--list,
+		.section-items--grid {
+			transition: transform $global-transistion-duration $cubic;
+			width: 100vw;
+
+			// @include mq(mq-land) {
+			// 	width: calc(100vw + ( var(--gap) * var(--filter-W-fix) ) );
+			// }
+			// @include mq(mq-iPad-land) {
+			// 	width: 100vw;
+			// }
+			// @include mq(mq-XL-UP) {
+			// }
+			grid-column: 1;
+			grid-row: 1;
+		}
+		.section-items--list {
+			transform: translate(0, 0);
+		}
+		.section-items--grid {
+			padding: 0 var(--gap);
+			transform: translate(100%, 0);
+			align-items: flex-start;
+		}
+		&.grid-view {
+			.section-items--list {
+				transform: translate(-100%, 0);
+			}
+			.section-items--grid {
+				transform: translate(0, 0);
+			}
+		}
+	}
+}
+.section-items--grid {
+	.items-item {
+		max-height: initial;
+		max-width: initial;
+		opacity: 1;
+		&.filter-out {
+			max-width: 0;
+			max-height: 0;
+			opacity: 0;
+			pointer-events: none;
+			margin: 0 calc(var(--gap) * -0.5);
+		}
+	}
+}
+.section-items--list {
+	.items-item {
+		max-height: initial;
+		opacity: 1;
+		padding-bottom: calc(var(--pad-T) * 0.5);
+		@include mq(mq-land) {
+			padding-bottom: calc(var(--pad-T) * 0.25);
+		}
+		&.filter-out {
+			max-height: 0;
+			opacity: 0;
+			pointer-events: none;
+			padding-bottom: 0;
+		}
+	}
+}

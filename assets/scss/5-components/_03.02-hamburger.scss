@@ -1,0 +1,110 @@
+.nav-switch,
+.nav-checkbox,
+.credits-checkbox { display: none }
+
+.hamburger {
+	display: block;
+	z-index: 2;
+	overflow: hidden;
+	padding: 0;
+	width: $ham-W;
+	height: $ham-H;
+	font-size: 0;
+	text-indent: -9999px;
+	cursor: pointer;
+	
+	@include mq(mq-L-UP) {
+		display: none;
+		visibility: hidden;
+	}
+
+	span {
+		&::before {
+		}
+	}
+}
+
+.credits-checkbox:checked ~ .hamburger span::before {
+	height: 0;
+}
+.credits-checkbox:checked ~ .hamburger span::after {
+	// bottom: 0;
+}
+
+
+
+/*
+.list-toggle,
+.hamburger {
+	display: block;
+	position: absolute;
+	top: calc(var(--logo-W) - var(--pad-T) * 0.75 + #{$ham-PAD});
+	right: 0;
+	z-index: 2;
+	overflow: hidden;
+	padding: 0;
+	width: $ham-W;
+	height: $ham-H;
+	font-size: 0;
+	text-indent: -9999px;
+	cursor: pointer;
+	
+	background-color: $ham-C;
+	
+	@include mq(mq-L-UP) {
+		display: none;
+		visibility: hidden;
+	}
+}
+.list-toggle span,
+.hamburger span {
+	display: block;
+	position: absolute;
+	top: ($ham-H / 2) - ($dot-SIZE / 2);
+	left: calc((#{$ham-W} - #{$dot-SIZE}) * 0.5);
+	background: $ham-BGR;
+	z-index: 1;
+	&,
+	&::before,
+	&::after {
+		width: $dot-SIZE;
+		height: $dot-SIZE;
+		background-color: $ham-BGR;
+		border-radius: 50%;
+	}
+	&::before,
+	&::after {
+		position: absolute;
+		display: block;
+		left: 0;
+		content: "";
+		z-index: 2;
+	}
+}
+
+.list-toggle span::before,
+.hamburger span::before {
+	top: -$dot-SIZE - $ham-BAR_SPACE;
+}
+
+.list-toggle span::after,
+.hamburger span::after {
+	bottom: -$dot-SIZE - $ham-BAR_SPACE;
+}
+
+[type=checkbox]:checked ~ label {
+	background-color: darken($ham-C, 20%);
+}
+[type=checkbox]:checked ~ label span {
+	background: none;
+}
+[type=checkbox]:checked ~ label span::before {
+	top: 0;
+}
+[type=checkbox]:checked ~ label span::after {
+	bottom: 0;
+}
+[type=checkbox]:checked ~ label ~ .menu {
+	cursor: pointer;
+}
+*/

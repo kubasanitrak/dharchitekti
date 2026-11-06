@@ -1,0 +1,50 @@
+.logo-container {
+	// position: sticky;
+	// z-index: 6;
+	// top: var(--pad-T);
+	width: calc(var(--logo-H) * var(--logo-RATIO));
+	display: flex;
+	// flex-direction: column;
+	// justify-content: flex-end;
+	// position: relative;
+	position: absolute;
+	top: calc(var(--pad-T) * 0.75);
+	right: var(--pad-R);
+	@include mq(mq-land) {
+		// --logo-RATIO: 1.46;
+	}
+}
+.logo-container,
+.logotyp {
+	.logo-col {
+		&--2 {
+			flex: 2 0 calc(100% / 3 * 2);
+		}
+		&--1 {
+			flex: 1 0 calc(100% / 3);
+		}
+	}
+}
+
+
+.logo,
+.logotyp {
+	width: 100%;
+}
+.logo,
+.logo-col,
+.logotyp {
+	.shape {
+		fill: var(--color-highlight);
+		&-a {
+			// fill: var(--color-highlight);
+		}
+		&-dh {
+			// fill: var(--color-primary);
+		}
+		&-architekti {
+			// fill: var(--white);
+		}
+	}
+
+}

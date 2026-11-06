@@ -1,0 +1,16 @@
+.publication-item {
+	&--content {}
+	&--caption {
+		p {
+			font-size: $fz-MINOR;
+		}
+		.article-item--caption_title {
+			margin-bottom: 0.5em;
+		}
+	}
+	&--footer {
+		display: flex;
+		flex-wrap: wrap;
+		gap: calc(var(--pad-R) * 0.5);
+	}
+}

@@ -1,0 +1,175 @@
+@import '1-settings/_colors';
+@import '1-settings/_vars';
+@import '1-settings/_custom-ff';
+
+@import '1-tools/_mixins';
+
+
+:root {
+		--gaps-NUM: 0;
+		--cols-NUM: 1;
+		@include mq(mq-land) {
+			--gaps-NUM: 4;
+			--cols-NUM: 5;
+		}
+		@include mq(mq-BREAK-P) {
+			--gaps-NUM: 7;
+			--cols-NUM: 8;
+		}
+
+		--filter-W-fix: 0.99;
+		@include mq(mq-iPad-land) {
+			--filter-W-fix: 0.75;
+		}
+		@include mq(mq-XL-UP) {
+			--filter-W-fix: 1.25;
+			// --filter-W: calc( (100% - (7 * var(--gutter)) ) / 8 + (var(--gap) * 1.75));
+			// --filter-W: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) + (var(--gap) * 1.25));
+		}
+
+}
+@import '2-generic/_body';
+@import '2-generic/_box-model';
+@import '2-generic/_reset';
+@import '2-generic/_type';
+
+@import '3-elements/_0-a';
+@import '3-elements/_0-table';
+@import '3-elements/_0-ul';
+@import '3-elements/_1-button';
+@import '3-elements/_1-form';
+@import '3-elements/_2-headlines';
+@import '3-elements/_2-sub-sup';
+
+@import '4-objects/_classes';
+@import '4-objects/_lazyloading';
+@import '4-objects/_svg';
+@import '4-objects/_video-embed';
+
+
+@import '5-components/_01-header';
+@import '5-components/_02-logo';
+@import '5-components/_03.01-menu';
+@import '5-components/_03.02-hamburger';
+// @import '5-components/_04-subnav';
+@import '5-components/_05-content';
+@import '5-components/_05.4-hp-content';
+@import '5-components/_05.5-all-works-content';
+@import '5-components/_05.5-team-member';
+@import '5-components/_05.6-proj-detail';
+@import '5-components/_05.7-intro-anim-logo';
+// @import '5-components/_05.1-overline';
+@import '5-components/_05.2-custom-map';
+// @import '5-components/_05.2-custom-accordeon';
+// @import '5-components/_05.3-outputs';
+// @import '5-components/_06-footer';
+@import '5-components/_07-search';
+@import '5-components/_00-css3-transforms.scss';
+
+
+@media (prefers-reduced-motion: reduce) {
+* { animation: none !important; transition: none !important; }
+}
+
+::-webkit-scrollbar {display:none}
+
+[data-theme], [data-theme="default"] {
+  background-color: var(--color-bg);
+  color: var(--color-primary);
+}
+
+[data-theme="dark"] {
+	--color-bg: var(--gray2);
+	--color-contrast-high: var(--white);
+	--color-line: var(--color-contrast-high);
+}
+[data-theme], [data-theme="default"],
+[data-theme="dark"] {
+}
+[data-theme="highlight"] {
+	--color-bg: var(--corp-c-3);
+	--color-contrast-high: var(--corp-c-1);
+}
+body {
+	overflow-x: hidden;
+}
+.wrapper {
+	width: 100%;
+	min-height: 100vh;
+	position: relative;
+	@include mq(mq-BREAK-P) {
+	}
+}
+
+@supports (--custom:property) {
+	[style*="--aspect-ratio"] {
+		position: relative;
+		padding-bottom: 0;
+	}
+	[style*="--aspect-ratio"]::before {
+		padding-bottom: calc(100% / (var(--aspect-ratio)));
+	}  
+	[style*="--aspect-ratio"] > :first-child {
+		position: absolute;
+		top: 0;
+		left: 0;
+		height: 100%;
+	}
+}
+
+/* LANG BASED VISIBILITY */ 
+body {
+	&.cz,
+	&.cs {
+		.multiline-cz {
+			display: initial;
+			visibility: visible;
+		}
+		.multiline-en {
+			display: none;
+			visibility: hidden;
+		}
+	}
+	&.en {
+		.multiline-en {
+			display: initial;
+			visibility: visible;
+		}
+		.multiline-cz {
+			display: none;
+			visibility: hidden;
+		}
+	}
+}
+
+.section-lines {
+	background: linear-gradient(
+		to right,
+		var(--color-bg) var(--pad-R),
+		var(--color-line) var(--pad-R),
+		var(--color-line) calc(var(--pad-R) + #{$line-THICK}),
+		var(--color-bg) calc(var(--pad-R) + #{$line-THICK}),
+		var(--color-bg) calc(((100% - var(--pad-R) * 2) / 4) + var(--pad-R)),
+		var(--color-line) calc(((100% - var(--pad-R) * 2) / 4) + var(--pad-R)),
+		var(--color-line) calc(((100% - var(--pad-R) * 2) / 4) + #{$line-THICK} + var(--pad-R)),
+		var(--color-bg) calc(((100% - var(--pad-R) * 2) / 4) + #{$line-THICK} + var(--pad-R)),
+		var(--color-bg) calc(((100% - var(--pad-R) * 2) / 2) + var(--pad-R)),
+		var(--color-line) calc(((100% - var(--pad-R) * 2) / 2) + var(--pad-R)),
+		var(--color-line) calc(((100% - var(--pad-R) * 2) / 2) + var(--pad-R) + #{$line-THICK}),
+		var(--color-bg) calc(((100% - var(--pad-R) * 2) / 2) + var(--pad-R) + #{$line-THICK}),
+		var(--color-bg) calc(((100% - var(--pad-R) * 2) / 4 * 3) + var(--pad-R)),
+		var(--color-line) calc(((100% - var(--pad-R) * 2) / 4 * 3) + var(--pad-R)),
+		var(--color-line) calc(((100% - var(--pad-R) * 2) / 4 * 3) + var(--pad-R) + #{$line-THICK}),
+		var(--color-bg) calc(((100% - var(--pad-R) * 2) / 4 * 3) + var(--pad-R) + #{$line-THICK}),
+		var(--color-bg) calc((100% - var(--pad-R) * 2) + var(--pad-R)),
+		var(--color-line) calc((100% - var(--pad-R) * 2) + var(--pad-R)),
+		var(--color-bg) calc((100% - var(--pad-R) * 2) + var(--pad-R) + #{$line-THICK}),
+	);
+}
+
+.section-projdet-hero,
+.section-hp-grid,
+.row,
+.row .acf-innerblocks-container {
+	content-visibility: auto;
+}

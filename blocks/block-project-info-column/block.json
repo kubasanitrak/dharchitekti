@@ -1,0 +1,17 @@
+{
+    "name": "acf/proj-info-col",
+    "title": "ProjInfo Column",
+    "description": "A custom project info block.",
+    "style": [ "file:../../assets/css/blocks.css" ],
+    "category": "formatting",
+    "icon": "admin-comments",
+    "keywords": ["project info col", "column"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "BLOCK-project-info-column.php"
+    },
+    "supports": {
+        "anchor": true,
+        "jsx": true
+    }
+}

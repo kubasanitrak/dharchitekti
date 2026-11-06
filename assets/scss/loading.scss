@@ -1,0 +1,78 @@
+// @import '1-settings/_vars';
+@import '1-tools/_mixins';
+
+$intro-delay: 3.0;
+$dur: 0.45;
+$cubic: cubic-bezier(.55,.29,.17,.97);
+:root {
+	--intro-mq-based-T: .65s;
+	@include mq(mq-L-UP) {
+		--intro-mq-based-T: .85s;
+	}
+	@include mq(mq-XL-UP) {
+		--intro-mq-based-T: 1.25s;
+	}
+}
+.logotyp {}
+
+.js {
+	.has-intro {
+			
+		.logo-container {
+			transform: translate(0, 0);
+			transition-delay: #{$intro-delay}s;
+		}
+		.fullpage-cover {
+			animation: 1s $cubic calc( #{$intro-delay + $dur}s ) fadeOutCover forwards;
+		}
+		.intro-dha-container {
+			animation: var(--intro-mq-based-T) $cubic #{$intro-delay}s slideOffLogo forwards;
+		}
+
+		.dha-only {
+			.logo-part-dh,
+			.logo-part-a {
+				transition-duration: var(--intro-mq-based-T);
+			}
+			--delay-int: 1.0;
+			.logo-part-a {
+				--delay-int: 1.25;
+			}
+		}
+	}
+	.loading {
+		&.has-intro {
+			.logo-container {
+				transform: translate(0, -20vh);
+			}
+			.fullpage-cover {
+			}
+			.intro-dha-container {
+			}
+		}
+	}
+}
+
+@keyframes fadeOutCover {
+	to {
+		background-color: transparent;
+	}
+}
+@keyframes slideOffLogo {
+	to {
+		opacity: 0.5;
+		transform: translate(0, -100vh);
+	}
+}
+/*
+@keyframes slideOff-dh {
+	to {
+		transform: translate(0, -100vh);
+	}
+}
+@keyframes slideOff-a {
+	to {
+		transform: translate(0, -100vh);
+	}
+}
+*/

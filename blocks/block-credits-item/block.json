@@ -1,0 +1,17 @@
+{
+    "name": "acf/credits-item",
+    "title": "Credits Item",
+    "description": "A custom project info block.",
+    "style": [ "file:../../assets/css/blocks.css" ],
+    "category": "formatting",
+    "icon": "admin-comments",
+    "keywords": ["credits item", "quote"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "BLOCK-credits-item.php"
+    },
+    "supports": {
+        "anchor": true,
+        "jsx": true
+    }
+}

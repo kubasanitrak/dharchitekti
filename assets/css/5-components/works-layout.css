@@ -1,0 +1,43 @@
+/*
+Error: Invalid CSS after "$": expected identifier, was "('.js-nav').on(..."
+        on line 252 of dha/wp-content/themes/dharchitekti/assets/scss/5-components/works-layout.scss
+
+247: }
+248: 
+249: ::-webkit-scrollbar-thumb:hover {
+250: 	background: rgba(0, 0, 0, 0.3);
+251: }
+252: $('.js-nav').on('click', function(){
+253: 	$('.inflight').toggleClass('menu-open');
+254: });
+255: 
+256: 
+257: // content:
+
+Backtrace:
+dha/wp-content/themes/dharchitekti/assets/scss/5-components/works-layout.scss:252
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/scss/parser.rb:1278:in `expected'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/scss/parser.rb:1208:in `expected'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/scss/parser.rb:1203:in `tok!'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/scss/parser.rb:639:in `variable'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/scss/parser.rb:696:in `block_child'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/scss/parser.rb:689:in `block_contents'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/scss/parser.rb:137:in `stylesheet'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/scss/parser.rb:41:in `parse'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/engine.rb:414:in `_to_tree'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/engine.rb:389:in `_render_with_sourcemap'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/engine.rb:307:in `render_with_sourcemap'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/exec/sass_scss.rb:387:in `run'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/exec/sass_scss.rb:63:in `process_result'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/exec/base.rb:50:in `parse'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/lib/sass/exec/base.rb:18:in `parse!'
+/Users/kuba/.rvm/gems/ruby-2.4.1/gems/sass-3.5.7/bin/sass:13:in `<top (required)>'
+/Users/kuba/.rvm/gems/ruby-2.4.1/bin/sass:23:in `load'
+/Users/kuba/.rvm/gems/ruby-2.4.1/bin/sass:23:in `<main>'
+/Users/kuba/.rvm/gems/ruby-2.4.1/bin/ruby_executable_hooks:15:in `eval'
+/Users/kuba/.rvm/gems/ruby-2.4.1/bin/ruby_executable_hooks:15:in `<main>'
+*/
+body:before {
+  white-space: pre;
+  font-family: monospace;
+  content: "Error: Invalid CSS after \"$\": expected identifier, was \"('.js-nav').on(...\"\A         on line 252 of dha/wp-content/themes/dharchitekti/assets/scss/5-components/works-layout.scss\A \A 247: }\A 248: \A 249: ::-webkit-scrollbar-thumb:hover {\A 250: 	background: rgba(0, 0, 0, 0.3);\A 251: }\A 252: $('.js-nav').on('click', function(){\A 253: 	$('.inflight').toggleClass('menu-open');\A 254: });\A 255: \A 256: \A 257: // content:"; }

@@ -1,0 +1,51 @@
+h1, .h1 {
+	font-size: $fz-H1;
+}
+h2, .h2 {
+	font-size: $fz-H2;
+}
+h3, .h3 {
+	font-size: $fz-H3;
+}
+h4, .h4 {
+	font-size: $fz-H4;
+}
+h5, .h5 {
+	font-size: $fz-H5;
+}
+h6, .h6 {
+	font-size: $fz-H6;
+}
+h1,
+h2,
+h3,
+h4 {
+	font-weight: normal;
+}
+
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+	&:not(.child-tab-title):not(.article-item--caption_title):not(.article-item--caption_excerpt-title):not(.team-grid--item---title):not(.projdet-title):not(.items-item--title) {
+		margin-bottom: 0.4em;
+	}
+}
+
+h3, .h3 {
+	line-height: 1.3em;
+}
+
+.line-top,
+.line-top-2 {
+	line-height: 1.5em;
+}

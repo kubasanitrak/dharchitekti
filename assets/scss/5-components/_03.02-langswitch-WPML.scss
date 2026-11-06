@@ -1,0 +1,38 @@
+.wpml-ls-legacy-list-horizontal,
+.wpml-ls {
+	margin: 0 0 0 calc(var(--gap) / 2);
+	border: none;
+	padding: 0;
+	line-height: 1em;
+	display: flex;
+
+	@include mq(mq-land) {
+		margin: 0;
+		position: absolute;
+		left: initial;
+		right: calc(100% / 8);
+	}
+	ul {
+		display: flex;		
+	}
+
+		.wpml-ls-item {
+			&-en {}
+			&-cs {}
+			a,
+			.wpml-ls-link {
+				margin: 0;
+				padding: 0;
+				height: 100%;
+
+				span.wpml-ls-native {
+					height: 100%;
+				}
+			}
+		}
+	a,
+	.wpml-ls-link {
+		margin: 0;
+		padding: 0;
+	}
+}

@@ -1,0 +1,161 @@
+.nav {
+	padding: calc(var(--pad-T) * 0.75) 0 0;
+	@include mq(mq-land) {
+		padding: calc(var(--pad-T) * 0.75) 0 calc(var(--pad-T) * 0.75);
+	}
+	width: 100%;
+	z-index: 0;
+	display: flex;
+	justify-content: space-between;
+	
+	@include mq(mq-land) {
+	}
+}
+
+.menu {
+	display: flex;
+	flex: 1 0 auto;
+	flex-direction: row;
+	flex-wrap: wrap;
+	gap: var(--gutter);
+
+	// --color-bg: pink;
+	// --color-line: blue;
+
+	padding-top: 0;
+	
+	position: relative;
+	padding-top: calc(var(--pad-T) * 0.35);
+	
+	transition: all 0.65s;
+	
+	margin-bottom: calc(var(--pad-T) * 0.5);
+
+	
+	@include mq(mq-land) {
+		padding-top: 0;
+		margin-bottom: var(--pad-T);
+		
+		background-color: transparent;
+		box-shadow: none;
+		clip-path: none;
+		margin-bottom: 0;
+	}
+	
+	li {
+		position: relative;
+
+		a {
+			line-height: 100%;
+			position: relative;
+			z-index: 100;
+		}
+	}
+}
+.main-nav-list {
+		min-width: 100%;
+	@include mq(mq-land) {
+		min-width: initial;
+	}
+
+	.menu-item-desktop-only {
+		display: none;
+		visibility: hidden;
+		@include mq(mq-land) {
+			display: initial;
+			visibility: visible;
+		}
+	}
+
+	.pos-1 {
+	}
+	.pos-2 {
+
+		min-width: calc(50% - (var(--gap) / 2));
+		@include mq(mq-land) {
+			min-width: none;
+		}
+	}
+	.lang-item {
+		margin: 0 0 0 calc(var(--gap) / 2);
+		@include mq(mq-land) {
+			margin: 0;
+			position: absolute;
+			left: initial;
+			right: calc(100% / 8);
+		}
+	}
+	li {
+		flex-basis: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) );
+		@include mq(mq-land) {
+			// --gaps-NUM: 7;
+			// --cols-NUM: 8;
+			// flex-basis: calc( (100% - (7 * var(--gutter))) / 8 );
+		}
+		@include mq(mq-BREAK-P) {
+			// --gaps-NUM: 3;
+			// --cols-NUM: 4;
+		}
+		&.menu-item-search {
+			flex-basis: 100%;
+			margin-top: var(--gap);
+			@include mq(mq-land) {
+				margin-top: 0;
+				flex-basis: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) * 2 );
+			}
+		}
+		&.current-menu-item a { 
+			color: var(--black);
+		}
+	}
+
+}
+.nav-list {
+	font-size: $fz-NAV;
+	display: flex;
+	flex-basis: 8ch;
+	gap: var(--gutter);
+	@include mq(mq-land) {
+		flex: 1 0 auto;
+	}
+
+	@include mq(mq-land) {
+	}		
+}
+
+.sub-nav-list {
+	flex-wrap: wrap;
+	li {
+		--gaps-NUM: 3;
+		--cols-NUM: 4;
+		@include mq(mq-land) {
+			--gaps-NUM: 4;
+			--cols-NUM: 5;
+		}
+		@include mq(mq-BREAK-P) {
+			--gaps-NUM: 7;
+			--cols-NUM: 8;
+		}
+		min-width: initial;
+		flex-basis: calc( (100% - (var(--gaps-NUM) * var(--gutter))) / var(--cols-NUM) );
+		&.negative-left {
+			margin-left: calc(var(--gutter) * 0.25);
+			@include mq(mq-land) {
+				margin-left: calc(var(--gutter) * -1.75);
+			}
+		}
+		&.even-gap-fix {
+			padding-left: calc(var(--gap) * 2);
+			@include mq(mq-land) {
+				padding-left: 0;
+			}
+		}
+	}
+}
+
+.footnav-list {
+	gap: calc(var(--pad-R) * 2);
+	@include mq(mq-land) {
+		gap: var(--gutter);
+	}
+}

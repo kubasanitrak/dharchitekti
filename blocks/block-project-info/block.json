@@ -1,0 +1,17 @@
+{
+    "name": "acf/project-info",
+    "title": "Project Info",
+    "description": "A custom project info block.",
+    "style": [ "file:../../assets/css/blocks.css" ],
+    "category": "formatting",
+    "icon": "admin-comments",
+    "keywords": ["project info", "quote"],
+    "acf": {
+        "mode": "preview",
+        "renderTemplate": "BLOCK-project-info.php"
+    },
+    "supports": {
+        "anchor": true,
+        "jsx": true
+    }
+}

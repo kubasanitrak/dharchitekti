@@ -1,0 +1,7 @@
+var AdoptWords=(function(){'use strict';var adoptWords={settings:{stripTrailingSpaces:true,minWords:5,maxCharacters:16,maxWidth:false},init(query,options={}){document.querySelectorAll(query).forEach(element=>{if(options.autoWidth){options.font=window.getComputedStyle(element).getPropertyValue('font');options.maxWidth=element.clientWidth;options.maxCharacters=false;}
+element.innerHTML=this.adopt(element.innerHTML,options);});},adopt(text,options={}){const settings=Object.assign(this.settings,options);if(settings.stripTrailingSpaces){text=text.replace(/ +$/,'');}
+const div=document.createElement('div');div.innerHTML=text;let escapedText=div.textContent||div.innerText||'';const words=escapedText.split(' ');if(words.length<settings.minWords){return text}
+if(settings.maxCharacters&&words.slice(-2).join(' ').length>settings.maxCharacters){return text}
+else if(settings.maxWidth){const canvas=document.createElement('canvas');const context=canvas.getContext('2d');context.font=settings.font;const width=Math.ceil(context.measureText(words.slice(-2).join(' ')).width);if(width>settings.maxWidth){return text}}
+const tags=text.match(/<.+?>/g);if(tags&&tags.length>1){for(let tag=0;tag<tags.length;tag++){text=text.replace(tags[tag],tags[tag].replace(/ /g,String.fromCharCode(0)));}}
+text=text.replace(/ ([^ ]*)$/,'&nbsp;$1');escapedText=escapedText.replace(/ ([^ ]*)$/,'&nbsp;$1');text=text.replace(/\x00/g,' ');return text}};return adoptWords;}());
